@@ -42,12 +42,33 @@ function removeProduct(event) {
   const target = event.currentTarget;
   console.log('The target in remove is:', target);
   //... your code goes here
+  target.parentNode.parentNode.parentNode.removeChild(target.parentNode.parentNode);
+  calculateAll();
 }
 
 // ITERATION 5
 
 function createProduct() {
   //... your code goes here
+  const prodcutName = document.querySelector('.create-product #inputName').value;
+  const productPrice = document.querySelector('.create-product #inputPrice').value;
+
+  let templateP = document.querySelector('#productTemplate');
+  let pro = templateP.content.cloneNode(true);
+
+  pro.querySelector(".name span").innerText = prodcutName;
+  pro.querySelector(".price span").innerText = productPrice;
+
+  console.log(templateP);
+
+  let parent = document.querySelector('tbody');
+  parent.appendChild(pro);
+
+  document.querySelector('.create-product #inputName').value = "";
+  document.querySelector('.create-product #inputPrice').value = 0;
+  //parent.appendChild(templateP.content);
+  //console.log(prodcutName);
+  //console.log('hi');
 }
 
 window.addEventListener('load', () => {
@@ -55,5 +76,10 @@ window.addEventListener('load', () => {
   calculatePricesBtn.addEventListener('click', calculateAll);
 
   //... your code goes here
-  
+  document.querySelectorAll('.product .btn-remove').forEach((button) => {
+    button.addEventListener('click', removeProduct)
+  });
+
+  const createBtn = document.querySelector('.create-product #create');
+  createBtn.addEventListener('click', createProduct);
 });
